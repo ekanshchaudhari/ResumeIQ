@@ -1,50 +1,23 @@
 import streamlit as st
 
-# -----------------------------
-# Page Configuration
-# -----------------------------
 st.set_page_config(
     page_title="ResumeIQ",
     page_icon="📄",
     layout="wide"
 )
 
-# -----------------------------
-# Header
-# -----------------------------
 st.title("📄 ResumeIQ")
 st.subheader("Your Smart Resume Analyzer")
 
-st.write(
-    """
-    Upload your resume below and ResumeIQ will analyze it for:
-    - 📧 Contact Information
-    - 🛠 Skills
-    - 📚 Resume Sections
-    - 📊 Resume Score
-    - 💡 Suggestions
-    """
-)
+st.write("""
+Welcome to ResumeIQ!
 
-st.divider()
+This application analyzes resumes and provides:
+- 📧 Contact information detection
+- 🛠️ Skill detection
+- 📚 Resume section analysis
+- 📊 Resume score
+- 💡 Personalized suggestions
+""")
 
-# -----------------------------
-# File Upload
-# -----------------------------
-uploaded_file = st.file_uploader(
-    "Upload your Resume (PDF)",
-    type=["pdf"]
-)
-
-# -----------------------------
-# If a file is uploaded
-# -----------------------------
-if uploaded_file is not None:
-
-    st.success("✅ Resume uploaded successfully!")
-
-    st.write("### File Details")
-
-    st.write(f"**Filename:** {uploaded_file.name}")
-
-    st.write(f"**File Size:** {round(uploaded_file.size/1024,2)} KB")
+st.info("🚀 Upload functionality will be added in the next step.")
