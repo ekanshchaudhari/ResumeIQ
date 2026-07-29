@@ -1,4 +1,5 @@
 import streamlit as st
+from utils.contact_detector import extract_email
 from utils.pdf_reader import extract_text_from_pdf
 st.set_page_config(
     page_title="ResumeIQ",
@@ -37,11 +38,21 @@ if uploaded_file is not None:
 
     # Extract text from the uploaded PDF
     resume_text = extract_text_from_pdf(uploaded_file)
+    email = extract_email(resume_text)
+
+    st.divider()
+
+    st.subheader("📧 Email Detected")
+
+    if email:
+        st.success(email)
+    else:
+        st.error("No email found.")
 
     st.divider()
 
     st.subheader("📄 Extracted Resume Text")
-
+    
     st.text(resume_text)
 
     st.info("📄 PDF File Detected")
