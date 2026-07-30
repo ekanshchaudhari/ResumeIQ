@@ -1,5 +1,10 @@
 import streamlit as st
-from utils.contact_detector import extract_email, extract_phone
+from utils.contact_detector import (
+    extract_email,
+    extract_phone,
+    extract_linkedin,
+    extract_github
+)
 from utils.pdf_reader import extract_text_from_pdf
 st.set_page_config(
     page_title="ResumeIQ",
@@ -40,6 +45,8 @@ if uploaded_file is not None:
     resume_text = extract_text_from_pdf(uploaded_file)
     email = extract_email(resume_text)
     phone = extract_phone(resume_text)
+    linkedin = extract_linkedin(resume_text)
+    github = extract_github(resume_text)
     st.divider()
 
     st.subheader("📧 Email Detected")
@@ -55,6 +62,19 @@ if uploaded_file is not None:
         st.success(phone)
     else:
         st.error("No phone number found.")
+    
+    st.subheader("💼 LinkedIn Profile")
+    
+    if linkedin:
+        st.success(linkedin)
+    else:
+        st.error("No LinkedIn profile found.")
+    st.subheader("🐙 GitHub Profile")
+
+    if github:
+        st.success(github)
+    else:
+        st.error("No GitHub profile found.")
     
     st.divider()
 

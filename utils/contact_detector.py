@@ -27,3 +27,29 @@ def extract_phone(text):
         return match.group()
 
     return None
+def extract_linkedin(text):
+    """
+    Extracts a LinkedIn profile URL from the text.
+    """
+
+    pattern = r"(https?://)?(www\.)?linkedin\.com/in/[A-Za-z0-9_-]+/?"
+
+    match = re.search(pattern, text)
+
+    if match:
+        return match.group()
+
+    return None
+def extract_github(text):
+    """
+    Extracts a GitHub profile URL from the text.
+    """
+
+    pattern = r"(https?://)?(www\.)?github\.com/[A-Za-z0-9_-]+/?"
+
+    match = re.search(pattern, text)
+
+    if match:
+        return match.group()
+
+    return None
