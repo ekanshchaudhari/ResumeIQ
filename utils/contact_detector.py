@@ -13,4 +13,17 @@ def extract_email(text):
     if match:
         return match.group()
 
+    return None    
+def extract_phone(text):
+    """
+    Extracts an Indian phone number from the text.
+    """
+
+    pattern = r"(\+91[\s-]?)?[0-9]{10}"
+
+    match = re.search(pattern, text)
+
+    if match:
+        return match.group()
+
     return None
