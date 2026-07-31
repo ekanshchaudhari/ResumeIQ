@@ -5,6 +5,8 @@ from utils.contact_detector import (
     extract_linkedin,
     extract_github
 )
+from utils.skill_detector import extract_skills
+from utils.pdf_reader import extract_text_from_pdf
 from utils.pdf_reader import extract_text_from_pdf
 st.set_page_config(
     page_title="ResumeIQ",
@@ -47,6 +49,7 @@ if uploaded_file is not None:
     phone = extract_phone(resume_text)
     linkedin = extract_linkedin(resume_text)
     github = extract_github(resume_text)
+    skills = extract_skills(resume_text)
     st.divider()
 
     st.subheader("📧 Email Detected")
@@ -75,6 +78,13 @@ if uploaded_file is not None:
         st.success(github)
     else:
         st.error("No GitHub profile found.")
+    st.subheader("🛠️ Skills Detected")
+
+    if skills:
+        for skill in skills:
+            st.success(skill)
+    else:
+        st.error("No skills found.")
     
     st.divider()
 
