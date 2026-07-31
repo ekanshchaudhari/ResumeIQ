@@ -6,6 +6,7 @@ from utils.contact_detector import (
     extract_github
 )
 from utils.skill_detector import extract_skills
+from utils.section_detector import detect_sections
 from utils.pdf_reader import extract_text_from_pdf
 from utils.pdf_reader import extract_text_from_pdf
 st.set_page_config(
@@ -50,6 +51,7 @@ if uploaded_file is not None:
     linkedin = extract_linkedin(resume_text)
     github = extract_github(resume_text)
     skills = extract_skills(resume_text)
+    sections = detect_sections(resume_text)
     st.divider()
 
     st.subheader("📧 Email Detected")
@@ -85,6 +87,13 @@ if uploaded_file is not None:
             st.success(skill)
     else:
         st.error("No skills found.")
+    st.subheader("📂 Resume Sections")
+
+    for section, found in sections.items():
+        if found:
+            st.success(f"✅ {section}")
+        else:
+            st.error(f"❌ {section}")
     
     st.divider()
 

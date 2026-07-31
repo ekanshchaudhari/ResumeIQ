@@ -24,6 +24,7 @@ SKILLS = [
     "Communication"
 ]
 
+
 def extract_skills(text):
     detected_skills = []
 
