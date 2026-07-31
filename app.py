@@ -7,6 +7,7 @@ from utils.contact_detector import (
 )
 from utils.skill_detector import extract_skills
 from utils.section_detector import detect_sections
+from utils.scorer import calculate_score
 from utils.pdf_reader import extract_text_from_pdf
 from utils.pdf_reader import extract_text_from_pdf
 st.set_page_config(
@@ -52,6 +53,7 @@ if uploaded_file is not None:
     github = extract_github(resume_text)
     skills = extract_skills(resume_text)
     sections = detect_sections(resume_text)
+    score = calculate_score(sections)
     st.divider()
 
     st.subheader("📧 Email Detected")
@@ -94,6 +96,8 @@ if uploaded_file is not None:
             st.success(f"✅ {section}")
         else:
             st.error(f"❌ {section}")
+    st.subheader("💯 Resume Score")
+    st.success(f"{score}/100")
     
     st.divider()
 
