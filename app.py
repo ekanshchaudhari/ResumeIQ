@@ -9,8 +9,7 @@ from utils.skill_detector import extract_skills
 from utils.section_detector import detect_sections
 from utils.scorer import calculate_score
 from utils.suggestions import generate_suggestions
-from utils.pdf_reader import extract_text_from_pdf
-from utils.pdf_reader import extract_text_from_pdf
+from utils.pdf_reader import extract_text_from_pdf, extract_links_from_pdf
 st.set_page_config(
     page_title="ResumeIQ",
     page_icon="📄",
@@ -48,10 +47,12 @@ if uploaded_file is not None:
 
     # Extract text from the uploaded PDF
     resume_text = extract_text_from_pdf(uploaded_file)
-    email = extract_email(resume_text)
-    phone = extract_phone(resume_text)
-    linkedin = extract_linkedin(resume_text)
-    github = extract_github(resume_text)
+    links = extract_links_from_pdf(uploaded_file)
+    combined_text = resume_text + "\n" + "\n".join(links)
+    email = extract_email(combined_text)
+    phone = extract_phone(combined_text)
+    linkedin = extract_linkedin(combined_text)
+    github = extract_github(combined_text)
     skills = extract_skills(resume_text)
     sections = detect_sections(resume_text)
     score = calculate_score(sections)

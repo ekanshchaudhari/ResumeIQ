@@ -5,7 +5,8 @@ SECTIONS = {
         "Education",
         "Educational Qualifications",
         "Academic Qualifications",
-        "Academic Background"
+        "Academic Background",
+        "E D U C A T I O N"
     ],
 
     "Experience": [
@@ -14,19 +15,22 @@ SECTIONS = {
         "Professional Experience",
         "Employment",
         "Internships",
-        "Positions of Responsibility"
+        "Positions of Responsibility",
+        "W O R K E X P E R I E N C E"
     ],
 
     "Projects": [
         "Projects",
         "Academic Projects",
-        "Personal Projects"
+        "Personal Projects",
+        "P R O J E C T S"
     ],
 
     "Skills": [
         "Skills",
+        "S K I L L S",
         "Technical Skills",
-        "Core Competencies"
+        "Core Competencies",
     ]
 }
 
