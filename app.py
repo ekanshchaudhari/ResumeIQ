@@ -98,8 +98,22 @@ if uploaded_file is not None:
             st.success(f"✅ {section}")
         else:
             st.error(f"❌ {section}")
+    if score >= 90:
+        rating = "🟢 Excellent Resume"
+
+    elif score >= 70:
+        rating = "🟡 Good Resume"
+
+    elif score >= 50:
+        rating = "🟠 Needs Improvement"
+
+    else:
+        rating = "🔴 Poor Resume"
+
     st.subheader("💯 Resume Score")
-    st.success(f"{score}/100")
+    st.progress(score / 100)
+    st.metric("Resume Score", f"{score}/100")
+    st.markdown(f"### {rating}")
 
     st.subheader("💡 Suggestions")
 
