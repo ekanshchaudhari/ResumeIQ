@@ -15,6 +15,42 @@ st.set_page_config(
     page_icon="📄",
     layout="wide"
 )
+st.markdown("""
+<style>
+
+/* Main container */
+.block-container{
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+/* Metric cards */
+div[data-testid="metric-container"]{
+    background-color:#1E1E1E;
+    border:1px solid #333333;
+    padding:18px;
+    border-radius:15px;
+    transition:0.3s;
+}
+
+div[data-testid="metric-container"]:hover{
+    border-color:#00C853;
+    transform:translateY(-2px);
+}
+
+/* Expanders */
+.streamlit-expanderHeader{
+    font-size:18px;
+    font-weight:600;
+}
+
+/* Success boxes */
+div[data-testid="stAlert"]{
+    border-radius:12px;
+}
+
+</style>
+""", unsafe_allow_html=True)
 
 st.title("📄 ResumeIQ")
 st.subheader("Your Smart Resume Analyzer")
@@ -40,11 +76,6 @@ uploaded_file = st.file_uploader(
 if uploaded_file is not None:
 
     st.success("✅ Resume uploaded successfully!")
-
-    st.write("### File Details")
-    st.write(f"**Filename:** {uploaded_file.name}")
-    st.write(f"**File Size:** {round(uploaded_file.size / 1024, 2)} KB")
-
     # Extract text from the uploaded PDF
     resume_text = extract_text_from_pdf(uploaded_file)
     links = extract_links_from_pdf(uploaded_file)
@@ -85,13 +116,14 @@ if uploaded_file is not None:
         st.success(github)
     else:
         st.error("No GitHub profile found.")
-    st.subheader("🛠️ Skills Detected")
+    
+    with st.expander("🛠️ Skills Detected", expanded=True):
 
-    if skills:
-        for skill in skills:
-            st.success(skill)
-    else:
-        st.error("No skills found.")
+        if skills:
+            for skill in skills:
+                st.success(skill)
+        else:
+            st.error("No skills found.")
     st.subheader("📂 Resume Sections")
 
     for section, found in sections.items():
@@ -112,15 +144,62 @@ if uploaded_file is not None:
         rating = "🔴 Poor Resume"
 
     st.subheader("💯 Resume Score")
-    st.progress(score / 100)
     st.metric("Resume Score", f"{score}/100")
-    st.markdown(f"### {rating}")
+    col1, col2 = st.columns(2)
 
+    with col1:
+        st.subheader("📧 Email")
+        if email:
+            st.success(email)
+        else:
+           st.error("Not Found")
+
+    with col2:
+        st.subheader("📱 Phone")
+        if phone:
+            st.success(phone)
+        else:
+            st.error("Not Found")
+
+    col3, col4 = st.columns(2)
+
+    with col3:
+        st.subheader("💼 LinkedIn")
+        if linkedin:
+            st.success(linkedin)
+        else:
+            st.error("Not Found")
+
+    with col4:
+        st.subheader("🐙 GitHub")
+        if github:
+            st.success(github)
+        else:
+            st.error("Not Found")
+    
+    
+    st.subheader("📊 Resume Overview")
+
+    col1, col2, col3, col4 = st.columns(4)
+
+    with col1:
+        st.metric("Score", f"{score}/100")
+
+    with col2:
+        st.metric("Rating", rating)
+
+    with col3:
+        st.metric("Skills", len(skills))
+
+    with col4:
+        st.metric("Sections", f"{sum(sections.values())}/{len(sections)}")  
+    
+    st.progress(score / 100)
     st.subheader("💡 Suggestions")
 
     for suggestion in suggestions:
         st.warning(suggestion)
-    
+   
     st.divider()
 
     st.subheader("📄 Extracted Resume Text")
