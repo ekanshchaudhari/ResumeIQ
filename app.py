@@ -10,6 +10,7 @@ from utils.section_detector import detect_sections
 from utils.scorer import calculate_score
 from utils.suggestions import generate_suggestions
 from utils.pdf_reader import extract_text_from_pdf, extract_links_from_pdf
+from utils.job_matcher import compare_skills
 st.set_page_config(
     page_title="ResumeIQ",
     page_icon="📄",
@@ -71,6 +72,16 @@ uploaded_file = st.file_uploader(
     type=["pdf"]
 )
 
+st.divider()
+
+st.subheader("📋 Job Description")
+
+job_description = st.text_area(
+    "Paste the Job Description here",
+    height=250,
+    placeholder="Paste the complete job description..."
+)
+
 
 
 if uploaded_file is not None:
@@ -88,34 +99,15 @@ if uploaded_file is not None:
     sections = detect_sections(resume_text)
     score = calculate_score(sections)
     suggestions = generate_suggestions(sections)
+
+    jd_skills = extract_skills(job_description)
+    results = compare_skills(skills, jd_skills)
+    matched = results["matched"]
+    missing = results["missing"]
+    extra = results["extra"] 
+    match_score = results["match_score"]
+    
     st.divider()
-
-    st.subheader("📧 Email Detected")
-
-    if email:
-        st.success(email)
-    else:
-        st.error("No email found.")
-    
-    st.subheader("📱 Phone Number Detected")
-
-    if phone:
-        st.success(phone)
-    else:
-        st.error("No phone number found.")
-    
-    st.subheader("💼 LinkedIn Profile")
-    
-    if linkedin:
-        st.success(linkedin)
-    else:
-        st.error("No LinkedIn profile found.")
-    st.subheader("🐙 GitHub Profile")
-
-    if github:
-        st.success(github)
-    else:
-        st.error("No GitHub profile found.")
     
     with st.expander("🛠️ Skills Detected", expanded=True):
 
@@ -195,11 +187,22 @@ if uploaded_file is not None:
         st.metric("Sections", f"{sum(sections.values())}/{len(sections)}")  
     
     st.progress(score / 100)
+    
+    st.subheader("🎯 Job Description Match")
+
+    if job_description.strip():
+
+        st.progress(match_score / 100)
+        st.metric("Match Score", f"{match_score}%")
+
+    else:
+
+        st.info("📋 Paste a Job Description above to calculate the ATS Match Score.")   
     st.subheader("💡 Suggestions")
 
     for suggestion in suggestions:
         st.warning(suggestion)
-   
+    
     st.divider()
 
     st.subheader("📄 Extracted Resume Text")
