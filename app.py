@@ -198,8 +198,29 @@ if uploaded_file is not None:
     else:
 
         st.info("📋 Paste a Job Description above to calculate the ATS Match Score.")   
-    st.subheader("💡 Suggestions")
 
+
+    st.divider()
+
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        st.subheader(f"🟢 Matched Skills ({len(matched)})")
+        for skill in matched:
+            st.success(skill)
+
+    with col2:
+        st.subheader(f"🔴 Missing Skills ({len(missing)})")
+
+        for skill in missing:
+            st.error(skill)
+
+    with col3:
+        st.subheader(f"⭐ Additional Skills ({len(extra)})")
+
+        for skill in extra:
+            st.info(skill)
+    
+    st.subheader("💡 Suggestions")
     for suggestion in suggestions:
         st.warning(suggestion)
     
