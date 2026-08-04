@@ -23,7 +23,7 @@ The project also allowed me to apply concepts such as **text processing, regular
 
 ## Dashboard
 
-![Dashboard](images/dashboard.png)
+![Dashboard](images/suggestions.png)
 
 ---
 
@@ -187,9 +187,7 @@ streamlit run app.py
 
 ---
 
-## Resume Suggestions
-
-![Suggestions](images/suggestions.png)
+![Suggestions](images/dashboard.png)
 
 ---
 
